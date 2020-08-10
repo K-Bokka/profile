@@ -1,3 +1,5 @@
+![Deploy](https://github.com/K-Bokka/profile/workflows/Deploy/badge.svg?branch=master)
+
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">
   <a href="https://www.gatsbyjs.org">
