@@ -4,14 +4,9 @@ import { graphql, Link, PageProps } from "gatsby"
 import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
+import { IndexPageDataQuery } from "../../graphql-types"
 
-type IndexDataProps = {
-  site: {
-    buildTime: string
-  }
-}
-
-const IndexPage: React.FC<PageProps<IndexDataProps>> = ({ data, path }) => (
+const IndexPage: React.FC<PageProps<IndexPageDataQuery>> = ({ data, path }) => (
   <Layout>
     <SEO title="Home"/>
     <h1>Hi people</h1>
@@ -27,10 +22,10 @@ const IndexPage: React.FC<PageProps<IndexDataProps>> = ({ data, path }) => (
 
 export default IndexPage
 
-export const indexQuery = graphql`
-    {
-        site {
-            buildTime(formatString: "YYYY-MM-DD hh:mm a z")
-        }
+export const query = graphql`
+  query IndexPageData {
+    site {
+      buildTime(formatString: "YYYY-MM-DD hh:mm a z")
     }
+  }
 `

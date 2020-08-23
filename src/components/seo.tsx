@@ -9,11 +9,12 @@ import * as React from "react"
 import * as PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
+import { SeoComponentDataQuery } from "../../graphql-types"
 
 function SEO({ description, lang, meta, title }) {
-  const { site } = useStaticQuery(
+  const { site }: SeoComponentDataQuery = useStaticQuery(
     graphql`
-      query {
+      query SeoComponentData {
         site {
           siteMetadata {
             title
@@ -22,7 +23,7 @@ function SEO({ description, lang, meta, title }) {
           }
         }
       }
-    `
+    `,
   )
 
   const metaDescription = description || site.siteMetadata.description
