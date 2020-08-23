@@ -4,7 +4,7 @@ import { graphql, Link, PageProps } from "gatsby"
 import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
-import { IndexPageDataQuery } from "../../graphql-types"
+import { IndexPageDataQuery } from "../../graphql/graphql-types"
 
 const IndexPage: React.FC<PageProps<IndexPageDataQuery>> = ({ data, path }) => (
   <Layout>
