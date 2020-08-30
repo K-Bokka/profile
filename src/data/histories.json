@@ -1,0 +1,43 @@
+[
+  {
+    "started_at": "2004-02",
+    "description": "Start of an engineering life. I was developing a customer management system for a major telecom company.",
+    "link": null,
+    "skills": [
+      "YPS-COBOL",
+      "Oracle9i"
+    ]
+  },
+  {
+    "started_at": "2009-10",
+    "description": "Worked on a data migration case for a government system that was under fire.",
+    "link": null,
+    "skills": [
+      "PL/SQL",
+      "Oracle10g"
+    ]
+  },
+  {
+    "started_at": "2011-05",
+    "description": "I was the sole proprietor of a small company building systems for a small company.",
+    "link": null,
+    "skills": [
+      "PHP5.x",
+      "PostgreSQL9.x",
+      "Mysql5.x"
+    ]
+  },
+  {
+    "started_at": "2017-05",
+    "description": "Joined O-uccino Inc.",
+    "link": null,
+    "skills": [
+      "Ruby on Rails",
+      "Scala",
+      "Mysql",
+      "AWS",
+      "Elasticsearch",
+      "Embulk"
+    ]
+  }
+]
