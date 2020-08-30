@@ -189,6 +189,8 @@ type File implements Node {
   ): Date!
   childImageSharp: ImageSharp
   children: [Node!]!
+  childrenHistoriesJson: [HistoriesJson]
+  childrenProjectsJson: [ProjectsJson]
   ctime(
     "Returns the difference between this date and the current time. Defaults to \"milliseconds\" but you can also pass in as the measurement \"years\", \"months\", \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\"."
     difference: String,
@@ -265,6 +267,49 @@ type FileGroupConnection {
   field: String!
   fieldValue: String
   nodes: [File!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type HistoriesJson implements Node {
+  children: [Node!]!
+  description: String
+  id: ID!
+  internal: Internal!
+  parent: Node
+  skills: [String]
+  started_at(
+    "Returns the difference between this date and the current time. Defaults to \"milliseconds\" but you can also pass in as the measurement \"years\", \"months\", \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\"."
+    difference: String,
+    "Format the date using Moment.js' date tokens, e.g. `date(formatString: \"YYYY MMMM DD\")`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens."
+    formatString: String,
+    "Returns a string generated with Moment.js' `fromNow` function"
+    fromNow: Boolean,
+    "Configures the locale Moment.js will use to format the date."
+    locale: String
+  ): Date
+}
+
+type HistoriesJsonConnection {
+  distinct(field: HistoriesJsonFieldsEnum!): [String!]!
+  edges: [HistoriesJsonEdge!]!
+  group(field: HistoriesJsonFieldsEnum!, limit: Int, skip: Int): [HistoriesJsonGroupConnection!]!
+  nodes: [HistoriesJson!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type HistoriesJsonEdge {
+  next: HistoriesJson
+  node: HistoriesJson!
+  previous: HistoriesJson
+}
+
+type HistoriesJsonGroupConnection {
+  edges: [HistoriesJsonEdge!]!
+  field: String!
+  fieldValue: String
+  nodes: [HistoriesJson!]!
   pageInfo: PageInfo!
   totalCount: Int!
 }
@@ -444,17 +489,55 @@ type PageInfo {
   totalCount: Int!
 }
 
+type ProjectsJson implements Node {
+  children: [Node!]!
+  description: String
+  id: ID!
+  internal: Internal!
+  parent: Node
+  status: String
+  title: String
+}
+
+type ProjectsJsonConnection {
+  distinct(field: ProjectsJsonFieldsEnum!): [String!]!
+  edges: [ProjectsJsonEdge!]!
+  group(field: ProjectsJsonFieldsEnum!, limit: Int, skip: Int): [ProjectsJsonGroupConnection!]!
+  nodes: [ProjectsJson!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type ProjectsJsonEdge {
+  next: ProjectsJson
+  node: ProjectsJson!
+  previous: ProjectsJson
+}
+
+type ProjectsJsonGroupConnection {
+  edges: [ProjectsJsonEdge!]!
+  field: String!
+  fieldValue: String
+  nodes: [ProjectsJson!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
 type Query {
   allDirectory(filter: DirectoryFilterInput, limit: Int, skip: Int, sort: DirectorySortInput): DirectoryConnection!
   allFile(filter: FileFilterInput, limit: Int, skip: Int, sort: FileSortInput): FileConnection!
+  allHistoriesJson(filter: HistoriesJsonFilterInput, limit: Int, skip: Int, sort: HistoriesJsonSortInput): HistoriesJsonConnection!
   allImageSharp(filter: ImageSharpFilterInput, limit: Int, skip: Int, sort: ImageSharpSortInput): ImageSharpConnection!
+  allProjectsJson(filter: ProjectsJsonFilterInput, limit: Int, skip: Int, sort: ProjectsJsonSortInput): ProjectsJsonConnection!
   allSite(filter: SiteFilterInput, limit: Int, skip: Int, sort: SiteSortInput): SiteConnection!
   allSiteBuildMetadata(filter: SiteBuildMetadataFilterInput, limit: Int, skip: Int, sort: SiteBuildMetadataSortInput): SiteBuildMetadataConnection!
   allSitePage(filter: SitePageFilterInput, limit: Int, skip: Int, sort: SitePageSortInput): SitePageConnection!
   allSitePlugin(filter: SitePluginFilterInput, limit: Int, skip: Int, sort: SitePluginSortInput): SitePluginConnection!
   directory(absolutePath: StringQueryOperatorInput, accessTime: DateQueryOperatorInput, atime: DateQueryOperatorInput, atimeMs: FloatQueryOperatorInput, base: StringQueryOperatorInput, birthTime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, blksize: IntQueryOperatorInput, blocks: IntQueryOperatorInput, changeTime: DateQueryOperatorInput, children: NodeFilterListInput, ctime: DateQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, dev: IntQueryOperatorInput, dir: StringQueryOperatorInput, ext: StringQueryOperatorInput, extension: StringQueryOperatorInput, gid: IntQueryOperatorInput, id: StringQueryOperatorInput, ino: FloatQueryOperatorInput, internal: InternalFilterInput, mode: IntQueryOperatorInput, modifiedTime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, name: StringQueryOperatorInput, nlink: IntQueryOperatorInput, parent: NodeFilterInput, prettySize: StringQueryOperatorInput, rdev: IntQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, root: StringQueryOperatorInput, size: IntQueryOperatorInput, sourceInstanceName: StringQueryOperatorInput, uid: IntQueryOperatorInput): Directory
-  file(absolutePath: StringQueryOperatorInput, accessTime: DateQueryOperatorInput, atime: DateQueryOperatorInput, atimeMs: FloatQueryOperatorInput, base: StringQueryOperatorInput, birthTime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, blksize: IntQueryOperatorInput, blocks: IntQueryOperatorInput, changeTime: DateQueryOperatorInput, childImageSharp: ImageSharpFilterInput, children: NodeFilterListInput, ctime: DateQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, dev: IntQueryOperatorInput, dir: StringQueryOperatorInput, ext: StringQueryOperatorInput, extension: StringQueryOperatorInput, gid: IntQueryOperatorInput, id: StringQueryOperatorInput, ino: FloatQueryOperatorInput, internal: InternalFilterInput, mode: IntQueryOperatorInput, modifiedTime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, name: StringQueryOperatorInput, nlink: IntQueryOperatorInput, parent: NodeFilterInput, prettySize: StringQueryOperatorInput, publicURL: StringQueryOperatorInput, rdev: IntQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, root: StringQueryOperatorInput, size: IntQueryOperatorInput, sourceInstanceName: StringQueryOperatorInput, uid: IntQueryOperatorInput): File
+  file(absolutePath: StringQueryOperatorInput, accessTime: DateQueryOperatorInput, atime: DateQueryOperatorInput, atimeMs: FloatQueryOperatorInput, base: StringQueryOperatorInput, birthTime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, blksize: IntQueryOperatorInput, blocks: IntQueryOperatorInput, changeTime: DateQueryOperatorInput, childImageSharp: ImageSharpFilterInput, children: NodeFilterListInput, childrenHistoriesJson: HistoriesJsonFilterListInput, childrenProjectsJson: ProjectsJsonFilterListInput, ctime: DateQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, dev: IntQueryOperatorInput, dir: StringQueryOperatorInput, ext: StringQueryOperatorInput, extension: StringQueryOperatorInput, gid: IntQueryOperatorInput, id: StringQueryOperatorInput, ino: FloatQueryOperatorInput, internal: InternalFilterInput, mode: IntQueryOperatorInput, modifiedTime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, name: StringQueryOperatorInput, nlink: IntQueryOperatorInput, parent: NodeFilterInput, prettySize: StringQueryOperatorInput, publicURL: StringQueryOperatorInput, rdev: IntQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, root: StringQueryOperatorInput, size: IntQueryOperatorInput, sourceInstanceName: StringQueryOperatorInput, uid: IntQueryOperatorInput): File
+  historiesJson(children: NodeFilterListInput, description: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, parent: NodeFilterInput, skills: StringQueryOperatorInput, started_at: DateQueryOperatorInput): HistoriesJson
   imageSharp(children: NodeFilterListInput, fixed: ImageSharpFixedFilterInput, fluid: ImageSharpFluidFilterInput, id: StringQueryOperatorInput, internal: InternalFilterInput, original: ImageSharpOriginalFilterInput, parent: NodeFilterInput, resize: ImageSharpResizeFilterInput, resolutions: ImageSharpResolutionsFilterInput, sizes: ImageSharpSizesFilterInput): ImageSharp
+  projectsJson(children: NodeFilterListInput, description: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, parent: NodeFilterInput, status: StringQueryOperatorInput, title: StringQueryOperatorInput): ProjectsJson
   site(buildTime: DateQueryOperatorInput, children: NodeFilterListInput, host: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, parent: NodeFilterInput, pathPrefix: StringQueryOperatorInput, polyfill: BooleanQueryOperatorInput, port: IntQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput): Site
   siteBuildMetadata(buildTime: DateQueryOperatorInput, children: NodeFilterListInput, id: StringQueryOperatorInput, internal: InternalFilterInput, parent: NodeFilterInput): SiteBuildMetadata
   sitePage(children: NodeFilterListInput, component: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, componentPath: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, internalComponentName: StringQueryOperatorInput, isCreatedByStatefulCreatePages: BooleanQueryOperatorInput, matchPath: StringQueryOperatorInput, parent: NodeFilterInput, path: StringQueryOperatorInput, pluginCreator: SitePluginFilterInput, pluginCreatorId: StringQueryOperatorInput): SitePage
@@ -660,7 +743,9 @@ type SitePluginPluginOptions {
   background_color: String
   cacheDigest: String
   cache_busting_mode: String
+  codegenConfig: SitePluginPluginOptionsCodegenConfig
   display: String
+  fileName: String
   icon: String
   include_favicon: Boolean
   legacy: Boolean
@@ -671,6 +756,10 @@ type SitePluginPluginOptions {
   start_url: String
   theme_color: String
   theme_color_in_head: Boolean
+}
+
+type SitePluginPluginOptionsCodegenConfig {
+  maybeValue: String
 }
 
 type SiteSiteMetadata {
@@ -905,6 +994,90 @@ enum FileFieldsEnum {
   childImageSharp___sizes___srcWebp @deprecated(reason : "Sorting on fields that need arguments to resolve is deprecated.")
   childImageSharp___sizes___tracedSVG @deprecated(reason : "Sorting on fields that need arguments to resolve is deprecated.")
   children
+  childrenHistoriesJson
+  childrenHistoriesJson___children
+  childrenHistoriesJson___children___children
+  childrenHistoriesJson___children___children___children
+  childrenHistoriesJson___children___children___id
+  childrenHistoriesJson___children___id
+  childrenHistoriesJson___children___internal___content
+  childrenHistoriesJson___children___internal___contentDigest
+  childrenHistoriesJson___children___internal___description
+  childrenHistoriesJson___children___internal___fieldOwners
+  childrenHistoriesJson___children___internal___ignoreType
+  childrenHistoriesJson___children___internal___mediaType
+  childrenHistoriesJson___children___internal___owner
+  childrenHistoriesJson___children___internal___type
+  childrenHistoriesJson___children___parent___children
+  childrenHistoriesJson___children___parent___id
+  childrenHistoriesJson___description
+  childrenHistoriesJson___id
+  childrenHistoriesJson___internal___content
+  childrenHistoriesJson___internal___contentDigest
+  childrenHistoriesJson___internal___description
+  childrenHistoriesJson___internal___fieldOwners
+  childrenHistoriesJson___internal___ignoreType
+  childrenHistoriesJson___internal___mediaType
+  childrenHistoriesJson___internal___owner
+  childrenHistoriesJson___internal___type
+  childrenHistoriesJson___parent___children
+  childrenHistoriesJson___parent___children___children
+  childrenHistoriesJson___parent___children___id
+  childrenHistoriesJson___parent___id
+  childrenHistoriesJson___parent___internal___content
+  childrenHistoriesJson___parent___internal___contentDigest
+  childrenHistoriesJson___parent___internal___description
+  childrenHistoriesJson___parent___internal___fieldOwners
+  childrenHistoriesJson___parent___internal___ignoreType
+  childrenHistoriesJson___parent___internal___mediaType
+  childrenHistoriesJson___parent___internal___owner
+  childrenHistoriesJson___parent___internal___type
+  childrenHistoriesJson___parent___parent___children
+  childrenHistoriesJson___parent___parent___id
+  childrenHistoriesJson___skills
+  childrenHistoriesJson___started_at
+  childrenProjectsJson
+  childrenProjectsJson___children
+  childrenProjectsJson___children___children
+  childrenProjectsJson___children___children___children
+  childrenProjectsJson___children___children___id
+  childrenProjectsJson___children___id
+  childrenProjectsJson___children___internal___content
+  childrenProjectsJson___children___internal___contentDigest
+  childrenProjectsJson___children___internal___description
+  childrenProjectsJson___children___internal___fieldOwners
+  childrenProjectsJson___children___internal___ignoreType
+  childrenProjectsJson___children___internal___mediaType
+  childrenProjectsJson___children___internal___owner
+  childrenProjectsJson___children___internal___type
+  childrenProjectsJson___children___parent___children
+  childrenProjectsJson___children___parent___id
+  childrenProjectsJson___description
+  childrenProjectsJson___id
+  childrenProjectsJson___internal___content
+  childrenProjectsJson___internal___contentDigest
+  childrenProjectsJson___internal___description
+  childrenProjectsJson___internal___fieldOwners
+  childrenProjectsJson___internal___ignoreType
+  childrenProjectsJson___internal___mediaType
+  childrenProjectsJson___internal___owner
+  childrenProjectsJson___internal___type
+  childrenProjectsJson___parent___children
+  childrenProjectsJson___parent___children___children
+  childrenProjectsJson___parent___children___id
+  childrenProjectsJson___parent___id
+  childrenProjectsJson___parent___internal___content
+  childrenProjectsJson___parent___internal___contentDigest
+  childrenProjectsJson___parent___internal___description
+  childrenProjectsJson___parent___internal___fieldOwners
+  childrenProjectsJson___parent___internal___ignoreType
+  childrenProjectsJson___parent___internal___mediaType
+  childrenProjectsJson___parent___internal___owner
+  childrenProjectsJson___parent___internal___type
+  childrenProjectsJson___parent___parent___children
+  childrenProjectsJson___parent___parent___id
+  childrenProjectsJson___status
+  childrenProjectsJson___title
   children___children
   children___children___children
   children___children___children___children
@@ -1013,6 +1186,98 @@ enum FileFieldsEnum {
   size
   sourceInstanceName
   uid
+}
+
+enum HistoriesJsonFieldsEnum {
+  children
+  children___children
+  children___children___children
+  children___children___children___children
+  children___children___children___id
+  children___children___id
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___children___parent___children
+  children___children___parent___id
+  children___id
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  children___parent___children
+  children___parent___children___children
+  children___parent___children___id
+  children___parent___id
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___parent___parent___children
+  children___parent___parent___id
+  description
+  id
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+  parent___children
+  parent___children___children
+  parent___children___children___children
+  parent___children___children___id
+  parent___children___id
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___children___parent___children
+  parent___children___parent___id
+  parent___id
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  parent___parent___children
+  parent___parent___children___children
+  parent___parent___children___id
+  parent___parent___id
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___parent___parent___children
+  parent___parent___parent___id
+  skills
+  started_at
 }
 
 enum ImageCropFocus {
@@ -1193,6 +1458,98 @@ enum PotraceTurnPolicy {
   TURNPOLICY_MINORITY
   TURNPOLICY_RIGHT
   TURNPOLICY_WHITE
+}
+
+enum ProjectsJsonFieldsEnum {
+  children
+  children___children
+  children___children___children
+  children___children___children___children
+  children___children___children___id
+  children___children___id
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___children___parent___children
+  children___children___parent___id
+  children___id
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  children___parent___children
+  children___parent___children___children
+  children___parent___children___id
+  children___parent___id
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___parent___parent___children
+  children___parent___parent___id
+  description
+  id
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+  parent___children
+  parent___children___children
+  parent___children___children___children
+  parent___children___children___id
+  parent___children___id
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___children___parent___children
+  parent___children___parent___id
+  parent___id
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  parent___parent___children
+  parent___parent___children___children
+  parent___parent___children___id
+  parent___parent___id
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___parent___parent___children
+  parent___parent___parent___id
+  status
+  title
 }
 
 enum SiteBuildMetadataFieldsEnum {
@@ -1538,7 +1895,9 @@ enum SitePageFieldsEnum {
   pluginCreator___pluginOptions___background_color
   pluginCreator___pluginOptions___cacheDigest
   pluginCreator___pluginOptions___cache_busting_mode
+  pluginCreator___pluginOptions___codegenConfig___maybeValue
   pluginCreator___pluginOptions___display
+  pluginCreator___pluginOptions___fileName
   pluginCreator___pluginOptions___icon
   pluginCreator___pluginOptions___include_favicon
   pluginCreator___pluginOptions___legacy
@@ -1664,7 +2023,9 @@ enum SitePluginFieldsEnum {
   pluginOptions___background_color
   pluginOptions___cacheDigest
   pluginOptions___cache_busting_mode
+  pluginOptions___codegenConfig___maybeValue
   pluginOptions___display
+  pluginOptions___fileName
   pluginOptions___icon
   pluginOptions___include_favicon
   pluginOptions___legacy
@@ -1768,6 +2129,8 @@ input FileFilterInput {
   changeTime: DateQueryOperatorInput
   childImageSharp: ImageSharpFilterInput
   children: NodeFilterListInput
+  childrenHistoriesJson: HistoriesJsonFilterListInput
+  childrenProjectsJson: ProjectsJsonFilterListInput
   ctime: DateQueryOperatorInput
   ctimeMs: FloatQueryOperatorInput
   dev: IntQueryOperatorInput
@@ -1810,6 +2173,25 @@ input FloatQueryOperatorInput {
   lte: Float
   ne: Float
   nin: [Float]
+}
+
+input HistoriesJsonFilterInput {
+  children: NodeFilterListInput
+  description: StringQueryOperatorInput
+  id: StringQueryOperatorInput
+  internal: InternalFilterInput
+  parent: NodeFilterInput
+  skills: StringQueryOperatorInput
+  started_at: DateQueryOperatorInput
+}
+
+input HistoriesJsonFilterListInput {
+  elemMatch: HistoriesJsonFilterInput
+}
+
+input HistoriesJsonSortInput {
+  fields: [HistoriesJsonFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
 }
 
 input ImageSharpFilterInput {
@@ -1946,6 +2328,25 @@ input Potrace {
   turnPolicy: PotraceTurnPolicy
 }
 
+input ProjectsJsonFilterInput {
+  children: NodeFilterListInput
+  description: StringQueryOperatorInput
+  id: StringQueryOperatorInput
+  internal: InternalFilterInput
+  parent: NodeFilterInput
+  status: StringQueryOperatorInput
+  title: StringQueryOperatorInput
+}
+
+input ProjectsJsonFilterListInput {
+  elemMatch: ProjectsJsonFilterInput
+}
+
+input ProjectsJsonSortInput {
+  fields: [ProjectsJsonFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
 input SiteBuildMetadataFilterInput {
   buildTime: DateQueryOperatorInput
   children: NodeFilterListInput
@@ -2049,11 +2450,17 @@ input SitePluginPackageJsonPeerDependenciesFilterListInput {
   elemMatch: SitePluginPackageJsonPeerDependenciesFilterInput
 }
 
+input SitePluginPluginOptionsCodegenConfigFilterInput {
+  maybeValue: StringQueryOperatorInput
+}
+
 input SitePluginPluginOptionsFilterInput {
   background_color: StringQueryOperatorInput
   cacheDigest: StringQueryOperatorInput
   cache_busting_mode: StringQueryOperatorInput
+  codegenConfig: SitePluginPluginOptionsCodegenConfigFilterInput
   display: StringQueryOperatorInput
+  fileName: StringQueryOperatorInput
   icon: StringQueryOperatorInput
   include_favicon: BooleanQueryOperatorInput
   legacy: BooleanQueryOperatorInput
