@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `ak-yamamoto profile`,
+    title: `Akira Yamamoto Profile`,
     description: `An engineer's profile.`,
-    author: `K-Bokka`,
+    author: `ak-yamamoto@k-bokka.com`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -18,13 +18,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `Akira Yamamoto Profile`,
+        short_name: `AK prof`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        background_color: `#FFFFFF`,
+        theme_color: `#272727`,
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
     {
